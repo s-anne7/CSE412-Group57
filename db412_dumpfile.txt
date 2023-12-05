@@ -1,0 +1,411 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 15.4
+-- Dumped by pg_dump version 15.4
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: match; Type: TABLE; Schema: public; Owner: sriyaanne
+--
+
+CREATE TABLE public.match (
+    matchid integer NOT NULL,
+    bracket_stage character(1),
+    team1_id integer,
+    team1_score integer,
+    team2_id integer,
+    team2_score integer,
+    result character varying(255)
+);
+
+
+ALTER TABLE public.match OWNER TO sriyaanne;
+
+--
+-- Name: match_matchid_seq; Type: SEQUENCE; Schema: public; Owner: sriyaanne
+--
+
+CREATE SEQUENCE public.match_matchid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.match_matchid_seq OWNER TO sriyaanne;
+
+--
+-- Name: match_matchid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sriyaanne
+--
+
+ALTER SEQUENCE public.match_matchid_seq OWNED BY public.match.matchid;
+
+
+--
+-- Name: players; Type: TABLE; Schema: public; Owner: sriyaanne
+--
+
+CREATE TABLE public.players (
+    playerid integer NOT NULL,
+    name character varying(255),
+    age integer,
+    goals_scored integer,
+    teamid integer
+);
+
+
+ALTER TABLE public.players OWNER TO sriyaanne;
+
+--
+-- Name: players_playerid_seq; Type: SEQUENCE; Schema: public; Owner: sriyaanne
+--
+
+CREATE SEQUENCE public.players_playerid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.players_playerid_seq OWNER TO sriyaanne;
+
+--
+-- Name: players_playerid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sriyaanne
+--
+
+ALTER SEQUENCE public.players_playerid_seq OWNED BY public.players.playerid;
+
+
+--
+-- Name: teams; Type: TABLE; Schema: public; Owner: sriyaanne
+--
+
+CREATE TABLE public.teams (
+    teamid integer NOT NULL,
+    coach character varying(255),
+    nation character varying(255),
+    rank character varying(255),
+    goals_overall integer
+);
+
+
+ALTER TABLE public.teams OWNER TO sriyaanne;
+
+--
+-- Name: teams_teamid_seq; Type: SEQUENCE; Schema: public; Owner: sriyaanne
+--
+
+CREATE SEQUENCE public.teams_teamid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.teams_teamid_seq OWNER TO sriyaanne;
+
+--
+-- Name: teams_teamid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sriyaanne
+--
+
+ALTER SEQUENCE public.teams_teamid_seq OWNED BY public.teams.teamid;
+
+
+--
+-- Name: tournament; Type: TABLE; Schema: public; Owner: sriyaanne
+--
+
+CREATE TABLE public.tournament (
+    tournamentid integer NOT NULL,
+    host_country character varying(255),
+    winner_1 integer,
+    winner_2 integer,
+    winner_3 integer,
+    winner_4 integer
+);
+
+
+ALTER TABLE public.tournament OWNER TO sriyaanne;
+
+--
+-- Name: tournament_tournamentid_seq; Type: SEQUENCE; Schema: public; Owner: sriyaanne
+--
+
+CREATE SEQUENCE public.tournament_tournamentid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tournament_tournamentid_seq OWNER TO sriyaanne;
+
+--
+-- Name: tournament_tournamentid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sriyaanne
+--
+
+ALTER SEQUENCE public.tournament_tournamentid_seq OWNED BY public.tournament.tournamentid;
+
+
+--
+-- Name: match matchid; Type: DEFAULT; Schema: public; Owner: sriyaanne
+--
+
+ALTER TABLE ONLY public.match ALTER COLUMN matchid SET DEFAULT nextval('public.match_matchid_seq'::regclass);
+
+
+--
+-- Name: players playerid; Type: DEFAULT; Schema: public; Owner: sriyaanne
+--
+
+ALTER TABLE ONLY public.players ALTER COLUMN playerid SET DEFAULT nextval('public.players_playerid_seq'::regclass);
+
+
+--
+-- Name: teams teamid; Type: DEFAULT; Schema: public; Owner: sriyaanne
+--
+
+ALTER TABLE ONLY public.teams ALTER COLUMN teamid SET DEFAULT nextval('public.teams_teamid_seq'::regclass);
+
+
+--
+-- Name: tournament tournamentid; Type: DEFAULT; Schema: public; Owner: sriyaanne
+--
+
+ALTER TABLE ONLY public.tournament ALTER COLUMN tournamentid SET DEFAULT nextval('public.tournament_tournamentid_seq'::regclass);
+
+
+--
+-- Data for Name: match; Type: TABLE DATA; Schema: public; Owner: sriyaanne
+--
+
+COPY public.match (matchid, bracket_stage, team1_id, team1_score, team2_id, team2_score, result) FROM stdin;
+41	Q	70	2	30	2	Argentina
+42	Q	40	1	50	1	Croatia
+43	Q	10	1	80	2	France
+44	Q	60	1	20	0	Morocco
+21	S	30	3	40	0	Argentina
+22	S	80	2	60	0	France
+11	F	30	3	80	3	Argentina
+\.
+
+
+--
+-- Data for Name: players; Type: TABLE DATA; Schema: public; Owner: sriyaanne
+--
+
+COPY public.players (playerid, name, age, goals_scored, teamid) FROM stdin;
+101	Jordan Pickford	29	1	10
+102	Sam Johnstone	30	0	10
+103	Aaron Ramsdale	25	0	10
+104	Kyle Walker	33	0	10
+105	Kieran Trippier	33	0	10
+201	Cristiano Ronaldo	38	0	20
+202	Gonçalo Ramos	22	0	20
+203	Bernardo Silva	29	0	20
+204	João Palhinha	28	0	20
+205	João Cancelo	29	0	20
+301	Lionel Messi	35	4	30
+302	Julian Alvarez	22	2	30
+303	Angel Di Maria	34	1	30
+304	Nahuel Molina	24	1	30
+305	Enzo Fernandez	21	0	30
+401	Domink Livakovic	28	0	40
+402	Bruno Petkovic	29	1	40
+403	Josko Gvardiol	21	0	40
+404	Mislav Orsic	30	0	40
+405	Dejan Lovren	34	0	40
+501	Alisson Becker	31	0	50
+502	Neymar	31	1	50
+503	Bruno Guimaraes	25	0	50
+504	Antony	22	0	50
+505	Gabriel Jesus	26	0	50
+601	Achraf Dari	24	0	60
+602	Zakaria Aboukhlal	23	0	60
+603	Hakim Ziyech	30	0	60
+604	Romain Saïss	26	0	60
+605	Youssef En-Nesyri	26	1	60
+701	Wout Weghorst	30	2	70
+702	Memphis Depay	28	0	70
+703	Virgil Van Dijk	31	0	70
+704	Cody Gakpo	23	0	70
+705	Frenkie De Jong	25	0	70
+801	Alphonse Areola	30	3	80
+802	Brice Samba	29	2	80
+803	Mike Maignan	28	1	80
+804	Lucas Hernández	27	1	80
+805	Benjamin Pavard	27	0	80
+206	Raphael Guerreiro	29	0	20
+209	Ccc Rrr	39	0	20
+\.
+
+
+--
+-- Data for Name: teams; Type: TABLE DATA; Schema: public; Owner: sriyaanne
+--
+
+COPY public.teams (teamid, coach, nation, rank, goals_overall) FROM stdin;
+20	Roberto Martínez	Portugal	NA	0
+30	Lionel Scaloni	Argentina	1st	8
+40	Zlatko Dalic	Croatia	3rd	1
+50	Fernando Diniz	Brazil	NA	1
+60	Walid Regragui	Morocco	4th	1
+70	Louis van Gaal	Netherlands	NA	2
+80	Claude Deschamps	France	2nd	7
+10	Gareth Southgate	England	NA	2
+\.
+
+
+--
+-- Data for Name: tournament; Type: TABLE DATA; Schema: public; Owner: sriyaanne
+--
+
+COPY public.tournament (tournamentid, host_country, winner_1, winner_2, winner_3, winner_4) FROM stdin;
+2022	Qatar	30	80	40	60
+\.
+
+
+--
+-- Name: match_matchid_seq; Type: SEQUENCE SET; Schema: public; Owner: sriyaanne
+--
+
+SELECT pg_catalog.setval('public.match_matchid_seq', 1, false);
+
+
+--
+-- Name: players_playerid_seq; Type: SEQUENCE SET; Schema: public; Owner: sriyaanne
+--
+
+SELECT pg_catalog.setval('public.players_playerid_seq', 1, false);
+
+
+--
+-- Name: teams_teamid_seq; Type: SEQUENCE SET; Schema: public; Owner: sriyaanne
+--
+
+SELECT pg_catalog.setval('public.teams_teamid_seq', 1, false);
+
+
+--
+-- Name: tournament_tournamentid_seq; Type: SEQUENCE SET; Schema: public; Owner: sriyaanne
+--
+
+SELECT pg_catalog.setval('public.tournament_tournamentid_seq', 1, false);
+
+
+--
+-- Name: match match_pkey; Type: CONSTRAINT; Schema: public; Owner: sriyaanne
+--
+
+ALTER TABLE ONLY public.match
+    ADD CONSTRAINT match_pkey PRIMARY KEY (matchid);
+
+
+--
+-- Name: players players_pkey; Type: CONSTRAINT; Schema: public; Owner: sriyaanne
+--
+
+ALTER TABLE ONLY public.players
+    ADD CONSTRAINT players_pkey PRIMARY KEY (playerid);
+
+
+--
+-- Name: teams teams_pkey; Type: CONSTRAINT; Schema: public; Owner: sriyaanne
+--
+
+ALTER TABLE ONLY public.teams
+    ADD CONSTRAINT teams_pkey PRIMARY KEY (teamid);
+
+
+--
+-- Name: tournament tournament_pkey; Type: CONSTRAINT; Schema: public; Owner: sriyaanne
+--
+
+ALTER TABLE ONLY public.tournament
+    ADD CONSTRAINT tournament_pkey PRIMARY KEY (tournamentid);
+
+
+--
+-- Name: match match_team1_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: sriyaanne
+--
+
+ALTER TABLE ONLY public.match
+    ADD CONSTRAINT match_team1_id_fkey FOREIGN KEY (team1_id) REFERENCES public.teams(teamid);
+
+
+--
+-- Name: match match_team2_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: sriyaanne
+--
+
+ALTER TABLE ONLY public.match
+    ADD CONSTRAINT match_team2_id_fkey FOREIGN KEY (team2_id) REFERENCES public.teams(teamid);
+
+
+--
+-- Name: players players_teamid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: sriyaanne
+--
+
+ALTER TABLE ONLY public.players
+    ADD CONSTRAINT players_teamid_fkey FOREIGN KEY (teamid) REFERENCES public.teams(teamid);
+
+
+--
+-- Name: tournament tournament_winner_1_fkey; Type: FK CONSTRAINT; Schema: public; Owner: sriyaanne
+--
+
+ALTER TABLE ONLY public.tournament
+    ADD CONSTRAINT tournament_winner_1_fkey FOREIGN KEY (winner_1) REFERENCES public.teams(teamid);
+
+
+--
+-- Name: tournament tournament_winner_2_fkey; Type: FK CONSTRAINT; Schema: public; Owner: sriyaanne
+--
+
+ALTER TABLE ONLY public.tournament
+    ADD CONSTRAINT tournament_winner_2_fkey FOREIGN KEY (winner_2) REFERENCES public.teams(teamid);
+
+
+--
+-- Name: tournament tournament_winner_3_fkey; Type: FK CONSTRAINT; Schema: public; Owner: sriyaanne
+--
+
+ALTER TABLE ONLY public.tournament
+    ADD CONSTRAINT tournament_winner_3_fkey FOREIGN KEY (winner_3) REFERENCES public.teams(teamid);
+
+
+--
+-- Name: tournament tournament_winner_4_fkey; Type: FK CONSTRAINT; Schema: public; Owner: sriyaanne
+--
+
+ALTER TABLE ONLY public.tournament
+    ADD CONSTRAINT tournament_winner_4_fkey FOREIGN KEY (winner_4) REFERENCES public.teams(teamid);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
